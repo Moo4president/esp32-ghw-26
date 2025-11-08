@@ -1,1 +1,1 @@
-# esp32-ghw-26
+# ESP-32 (GHW API Week)
