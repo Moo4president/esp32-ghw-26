@@ -30,3 +30,32 @@ def connect_wifi():
 
     print(" Failed to connect to WiFi.")
     return None
+
+
+def web_page():
+    led_state = "ON" if led.value() == 1 else "OFF"
+    status_color = "green" if led.value() == 1 else "red"
+    html = f"""<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESP32 LED Controller</title>
+    <style>
+      body {{ font - family: Arial, Helvetica, sans-serif; padding: 50px; overflow: hidden; text-align: center;}}
+      h1 {{ color: #333;}}
+      .status {{ font - size: 24px; color: {status_color}; margin: 30px; }}
+      a {{ display: inline-block; padding: 15px 30px; margin: 10px; font-size: 20px; color: white; text-decoration: none; border-radius: 5px; }}
+      .on {{ background - color: darkgreen; }}
+      .off {{ background - color: darkred; }}
+    </style>
+  </head>
+  <body>
+    <h1>ESP32 LED Controller</h1>
+    <div class="status">LED is currently: <strong>{led_state}</strong></div>
+    <a href="/on" class="on">Turn ON</a>
+    <a href="/off" class="off">Turn OFF</a>
+  </body>
+</html>
+"""
+    return html
