@@ -1,3 +1,6 @@
+Note; whoops! I had forgotten to add my user details, which is why it kept failing to fetch and returned the "None" type error.
+
+
 # ESP-32 (GHW API Week)
 
 ## Setup python virtual environment
