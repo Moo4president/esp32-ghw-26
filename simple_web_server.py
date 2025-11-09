@@ -34,7 +34,7 @@ def connect_wifi():
 
 def web_page():
     led_state = "ON" if led.value() == 1 else "OFF"
-    status_color = "green" if led.value() == 1 else "red"
+    status_color = "green" if led_state == "ON" else "red"
     html = f"""<!DOCTYPE html>
 <html lang="en">
   <head>
@@ -42,12 +42,12 @@ def web_page():
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>ESP32 LED Controller</title>
     <style>
-      body {{ font - family: Arial, Helvetica, sans-serif; padding: 50px; overflow: hidden; text-align: center;}}
+      body {{ font-family: sans-serif; padding: 50px; overflow: hidden; text-align: center;}}
       h1 {{ color: #333;}}
-      .status {{ font - size: 24px; color: {status_color}; margin: 30px; }}
-      a {{ display: inline-block; padding: 15px 30px; margin: 10px; font-size: 20px; color: white; text-decoration: none; border-radius: 5px; }}
-      .on {{ background - color: darkgreen; }}
-      .off {{ background - color: darkred; }}
+      .status {{ font-size: 24px; color: {status_color}; margin: 30px; }}
+      a {{ display: inline-block; padding: 15px 30px; margin: 10px; font-size: 20px; color: white; text-decoration: none; border-radius: 5px; background-color: #555; }}
+      .on {{ background-color: darkgreen; }}
+      .off {{ background-color: darkred; }}
     </style>
   </head>
   <body>
@@ -80,7 +80,6 @@ def start_server():
             print(f" Connection from {addr}")
 
             request = conn.recv(1024).decode()
-            print(f" Request: {request}")
 
             if "/on" in request:
                 led.on()
@@ -96,9 +95,16 @@ def start_server():
             conn.close()
     except KeyboardInterrupt:
         print(" Server stopped.")
-        s.close()
         led.off()
+        s.close()
 
+# AI generated:
+def stop_server():
+    led.off()
+    print(" Server stopped and LED turned OFF.")
 
 if __name__ == "__main__":
-    start_server()
+    try:
+        start_server()
+    except KeyboardInterrupt:
+        stop_server()
